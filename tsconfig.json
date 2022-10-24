@@ -5,11 +5,20 @@
     "module": "ESNext",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
     "esModuleInterop": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "types": ["vite/client"],
+    "types": [
+      "vite/client",
+      "cypress",
+      "node"
+    ],
     "noEmit": true,
     "isolatedModules": true
-  }
+  },
+  "include": [
+    "cypress/e2e/*.ts",
+    "src/**/*"
+  ]
 }

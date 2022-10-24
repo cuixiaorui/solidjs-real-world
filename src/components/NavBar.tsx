@@ -1,16 +1,21 @@
 import { NavLink } from "./NavLink";
 import { Show } from "solid-js";
-import { useStore } from "../store";
+// import { useStore } from "../store";
+// import { useCount } from "../store";
 
 export const NavBar = () => {
-  const [store]: any = useStore();
-  console.log(store());
+  // const [store]: any = useStore();
+  // console.log(store);
+  // const [count, setCount] = useCount();
+  // const [state] = useCount();
 
+  return <div>navbar</div>
+  // return <div>navbar count:{state.count}</div>;
   return (
     <nav class="navbar navbar-light">
       <div class="container">
         <NavLink class="navbar-brand" route="">
-          {store().appName}
+          {store.appName}
         </NavLink>
         <ul class="nav navbar-nav pull-xs-right">
           <li class="nav-item">
@@ -19,7 +24,7 @@ export const NavBar = () => {
             </NavLink>
           </li>
           <Show
-            when={store().currentUser}
+            when={store.currentUser}
             fallback={
               <>
                 <li class="nav-item">
@@ -49,9 +54,9 @@ export const NavBar = () => {
               <NavLink
                 class="nav-link"
                 route="profile"
-                href={`@${store().currentUser.username}`}
+                href={`@${store.currentUser.username}`}
               >
-                {store().currentUser.username}
+                {store.currentUser.username}
               </NavLink>
             </li>
           </Show>

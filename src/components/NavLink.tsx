@@ -6,6 +6,7 @@ export const NavLink = (props: any) => {
     <a
       class={props.class}
       // classList={{ active: props.active || getParams()?.routeName === props.route }}
+      classList={{ active: props.active }}
       href={`#/${props.href || props.route}`}
       onClick={() => window.scrollTo(0, 0)}
     >
