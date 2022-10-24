@@ -3,13 +3,16 @@ import { render } from "solid-js/web";
 import { Router } from "@solidjs/router";
 import "./index.css";
 import App from "./App";
+import { HopeProvider } from "@hope-ui/solid";
 // import { StoreProvider } from "./store";
 
 render(
   () => (
     // <StoreProvider>
     <Router>
-      <App />
+      <HopeProvider>
+        <App />
+      </HopeProvider>
     </Router>
     // </StoreProvider>
   ),

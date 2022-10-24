@@ -6,7 +6,6 @@ import { Users } from "./pages/Users";
 import { SignUp } from "./pages/SignUp";
 
 const App: Component = () => {
-  
   return (
     <div>
       <NavBar></NavBar>

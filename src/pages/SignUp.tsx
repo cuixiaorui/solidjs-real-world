@@ -17,7 +17,7 @@ export function SignUp() {
   const [email, setEmail] = createSignal("");
 
   return (
-    <div>
+    <div style="">
       <input
         id="username"
         type="text"
@@ -33,7 +33,7 @@ export function SignUp() {
         type="text"
         onchange={(e: any) => setPassword(e.target.value)}
       ></input>
-      <button onclick={signUpHanlder}>Sign up</button>
+      <button id="signUpBtn" onclick={signUpHanlder}>Sign up</button>
     </div>
   );
 }
