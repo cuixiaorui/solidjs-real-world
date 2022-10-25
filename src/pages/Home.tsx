@@ -1,16 +1,14 @@
-// import NavLink from "../../components/NavLink";
-// import ArticleList from "../../components/ArticleList";
+import ArticleList from "../components/ArticleList";
 import { createMemo, For, Show, Suspense } from "solid-js";
 import { NavLink } from "../components/NavLink";
-// import { useStore } from "../store";
 import { useSearchParams, useLocation } from "@solidjs/router";
 
 import { useStore } from "../store";
 
-// { appName, token, handleSetPage, tab, store }
-
 function useData() {
   const [store]: any = useStore();
+
+const data = store.getAllArticles()
 
   return {
     handleSetPage() {},
@@ -63,12 +61,12 @@ export const Home = () => {
         <div class="row">
           <div class="col-md-9">
             <FeedToggle token={state.token}></FeedToggle>
-            {/* <ArticleList
+            <ArticleList
               articles={Object.values(store.articles)}
-              totalPagesCount={store.totalPagesCount}
-              currentPage={store.page}
-              onSetPage={handleSetPage}
-            /> */}
+              // totalPagesCount={store.totalPagesCount}
+              // currentPage={store.page}
+              // onSetPage={handleSetPage}
+            />
           </div>
 
           <div class="col-md-3">

@@ -29,7 +29,7 @@ export const Articles = {
   favoritedBy: (author: string | number | boolean, page: any) =>
     send("get", `/articles?favorited=${encodeURIComponent(author)}&${limit(5, page)}`),
   feed: () => send("get", "/articles/feed?limit=10&offset=0"),
-  get: (slug: any) => send("get", `/articles/${slug}`, undefined, "article"),
+  get: (slug: any) => send("get", `/articles/${slug}`, undefined, "articles"),
   unfavorite: (slug: any) => send("delete", `/articles/${slug}/favorite`),
   update: (article: { slug: any }) =>
     send("put", `/articles/${article.slug}`, { article: omitSlug(article) }),

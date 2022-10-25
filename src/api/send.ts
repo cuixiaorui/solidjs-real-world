@@ -22,6 +22,7 @@ export async function send(
   try {
     const response = await fetch(API_ROOT + url, opts);
     const json = await response.json();
+    console.log("json",json,resKey)
     return resKey ? json[resKey] : json;
   } catch (err: any) {
     if (err && err.response && err.response.status === 401) {

@@ -1,29 +1,19 @@
 import { For, Show, Suspense } from "solid-js";
 import { useStore } from "../store";
-// import ArticlePreview from "./ArticlePreview";
+import ArticlePreview from "./ArticlePreview";
 
-export default props => {
-  const [{ token }, { unmakeFavorite, makeFavorite }] = useStore(),
-    handleClickFavorite = (article:any, e:any) => {
-      e.preventDefault();
-      article.favorited ? unmakeFavorite(slug) : makeFavorite(slug);
-    },
-    handlePage = (v, e) => {
-      e.preventDefault();
-      props.onSetPage(v);
-      setTimeout(() => window.scrollTo(0, 0), 200);
-    };
+// 1. 获取到 props.articles
+
+export default (props) => {
+  //   handlePage = (v, e) => {
+  //     e.preventDefault();
+  //     props.onSetPage(v);
+  //     setTimeout(() => window.scrollTo(0, 0), 200);
+  //   };
 
   return (
     <Suspense fallback={<div class="article-preview">Loading articles...</div>}>
-      <For
-        each={props.articles}
-        fallback={<div class="article-preview">No articles are here... yet.</div>}
-      >
-        {article => (
-          <ArticlePreview article={article} token={token} onClickFavorite={handleClickFavorite} />
-        )}
-      </For>
+      <Content articles={props.articles}></Content>
       {/* <Show when={props.totalPagesCount > 1}>
         <nav>
           <ul class="pagination">
@@ -44,3 +34,26 @@ export default props => {
     </Suspense>
   );
 };
+
+function Content(props) {
+  const [{ token, unmakeFavorite, makeFavorite }]: any = useStore();
+
+  function handleClickFavorite([article, slug], e: any) {
+    article.favorited ? unmakeFavorite(slug) : makeFavorite(slug);
+  }
+
+  return (
+    <For
+      each={props.articles}
+      fallback={<div class="article-preview">No articles are here... yet.</div>}
+    >
+      {(article: any) => (
+        <ArticlePreview
+          article={article}
+          token={token}
+          onClickFavorite={handleClickFavorite}
+        />
+      )}
+    </For>
+  );
+}

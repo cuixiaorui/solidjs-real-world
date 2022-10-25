@@ -48,5 +48,10 @@
 同学们玩的愉快~
 
 ## 结对日期表
-- 10.25 日  Baboon King
+- [x] 10.25 日  Baboon King
 - 10.26 日  abyss
+
+
+## Tasking
+- [x] 完成 article 列表的展示
+- [ ] 完成 home 页面的 tab 切换功能
