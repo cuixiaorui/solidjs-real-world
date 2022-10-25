@@ -37,6 +37,10 @@
 - https://github.com/cuixiaorui/solidjs-real-world
 - https://github.com/solidjs/solid-realworld
 
+## 准备工作
+- 腾讯会议 https://meeting.tencent.com/
+- Live Share https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare
+
 ## 参与进来
 直接加阿崔 wx: cuixr1314  说明你的来意即可
 
