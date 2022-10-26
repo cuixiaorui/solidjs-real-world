@@ -1,20 +1,41 @@
 import ArticleList from "../components/ArticleList";
-import { createMemo, For, Show, Suspense } from "solid-js";
+import {
+  createMemo,
+  For,
+  Show,
+  Suspense,
+  lazy,
+  createResource,
+  onMount,
+  createEffect,
+} from "solid-js";
 import { NavLink } from "../components/NavLink";
-import { useSearchParams, useLocation } from "@solidjs/router";
+import { useSearchParams, useLocation, useParams } from "@solidjs/router";
+import { Tags as TagsApi } from "../api";
 
 import { useStore } from "../store";
 
 function useData() {
   const [store]: any = useStore();
 
-const data = store.getAllArticles()
+  const data = store.getAllArticles();
+
+  const location = useLocation();
+  console.log(location, "-----");
 
   return {
     handleSetPage() {},
     tab: () => {
-      const [searchParams] = useSearchParams();
-      return searchParams.tab;
+      // const [searchParams] = useSearchParams();
+      // return searchParams.tab;
+      const token = "2134";
+      const search = location.search.split("?")[1];
+      if (!search) return token ? "feed" : "all";
+
+      const query = new URLSearchParams(search);
+      const result = query.get("tab");
+      console.log(result);
+      return result;
     },
     store,
   };
@@ -53,6 +74,15 @@ const data = store.getAllArticles()
 export const Home = () => {
   const [state]: any = useStore();
   const { handleSetPage, tab, store } = useData();
+
+  const [searchParams] = useSearchParams();
+
+  const getData = state.getAriclesByTag();
+  createEffect(() => {
+    console.log(getData(), "--1-1-");
+    console.log(searchParams.tab);
+  });
+
   return (
     <div class="home-page">
       <Banner appName={state.appName}></Banner>
@@ -119,8 +149,8 @@ function Tags(props) {
   return (
     <div class="sidebar">
       <p>Popular Tags</p>
-      <Suspense fallback="Loading tags...">
-        <div class="tag-list">
+      <div class="tag-list">
+        <Suspense fallback="Loading tags...">
           <For each={props.tags}>
             {(tag: any) => (
               <a href={`#/?tab=${tag}`} class="tag-pill tag-default">
@@ -128,8 +158,8 @@ function Tags(props) {
               </a>
             )}
           </For>
-        </div>
-      </Suspense>
+        </Suspense>
+      </div>
     </div>
   );
 }

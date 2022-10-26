@@ -55,3 +55,5 @@
 ## Tasking
 - [x] 完成 article 列表的展示
 - [ ] 完成 home 页面的 tab 切换功能
+	- [x] tag 加载数据之前显示 loading
+	- [x] 点击 tag 之后 会发起一个 axjx 请求

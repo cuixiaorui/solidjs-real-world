@@ -25,7 +25,7 @@ export function createArticles({ agent, actions, state, setState }: any) {
         [args[1]]: article,
       }));
     },
-    { initialValue: { name: "heiheihei" } }
+    { initialValue: { name: "" } }
   );
 
 

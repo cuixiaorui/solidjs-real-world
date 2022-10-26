@@ -1,6 +1,6 @@
-import { createSignal, createResource } from "solid-js";
+import { createResource, createSignal } from "solid-js";
 import { createStore } from "solid-js/store";
-import { Auth, Articles } from "../api";
+import { Auth, Articles, Tags } from "../api";
 
 const [state, setState] = createStore({
   count: 0,
@@ -8,20 +8,22 @@ const [state, setState] = createStore({
   articles: {},
   appName: "cxr-solidjs-real-world",
   currentUser: { username: "" },
-  tags: ["implementations", "app", "a", "b", "c"],
+  get tags() {
+    return tags();
+  },
   totalPagesCount: 0,
   async unmakeFavorite(slug) {
     const article = state.articles[slug];
     console.log("click _unmakeFavorite");
     if (article && article.favorited) {
-      setState("articles", slug, (s:any) => ({
+      setState("articles", slug, (s: any) => ({
         favorited: false,
         favoritesCount: s.favoritesCount - 1,
       }));
       try {
         await Articles.unfavorite(slug);
       } catch (err) {
-        setState("articles", slug, (s:any) => ({
+        setState("articles", slug, (s: any) => ({
           favorited: true,
           favoritesCount: s.favoritesCount + 1,
         }));
@@ -31,16 +33,16 @@ const [state, setState] = createStore({
   },
   async makeFavorite(slug) {
     const article = state.articles[slug];
-    console.log("click _makeFavorite",article);
+    console.log("click _makeFavorite", article);
     if (article && !article.favorited) {
-      setState("articles", slug, (s:any) => ({
+      setState("articles", slug, (s: any) => ({
         favorited: true,
         favoritesCount: s.favoritesCount + 1,
       }));
       try {
         await Articles.favorite(slug);
       } catch (err) {
-        setState("articles", slug, (s:any) => ({
+        setState("articles", slug, (s: any) => ({
           favorited: false,
           favoritesCount: s.favoritesCount - 1,
         }));
@@ -49,7 +51,9 @@ const [state, setState] = createStore({
     }
   },
 
-  getAllArticles() {
+  getAllArticles(tabs: string | undefined) {
+    // 1. tabs name
+    // 2. 发送请求
     console.log("all articles");
     // const [articleSource, setArticleSource] = createSignal();
     // const [articles] = createResource(
@@ -79,12 +83,32 @@ const [state, setState] = createStore({
       // return data;
     });
   },
+  getAriclesByTag() {
+    console.log("getAriclesByTag")
+    const [tag, setTag] = createSignal("est");
+    window.tag = tag;
+    window.setTag = setTag;
+    const [articles] = createResource(tag, (arg) => Articles.byTag(arg, 0), {
+      initialValue: [],
+    });
+    return articles;
+  },
   async signUp(username: string, email: string, password: string) {
     const { user } = await Auth.register(username, email, password);
     localStorage.setItem("Token", user.token);
     setState({ currentUser: { username: user.username }, token: user.token });
   },
 });
+
+let tags;
+async function createTags() {
+  [tags] = createResource(
+    () => Tags.getAll().then((tags) => tags.map((t) => t.toLowerCase())),
+    { initialValue: [] }
+  );
+}
+
+createTags();
 
 export function useStore() {
   return [state, setState];
