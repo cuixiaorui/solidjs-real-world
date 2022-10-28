@@ -54,6 +54,14 @@
 
 ## Tasking
 - [x] 完成 article 列表的展示
-- [ ] 完成 home 页面的 tab 切换功能
+- [x] 完成 home 页面的 tags 切换功能
 	- [x] tag 加载数据之前显示 loading
-	- [x] 点击 tag 之后 会发起一个 axjx 请求
+	- [x] 点击 tag 之后 会发起一个 ajax 请求
+	- [x] 把 tag 获取到的新的数据给到 article
+	- [x] 重构 把 store 拆分成 多个  类似于 pinia 的 store 的使用方式 
+- [x] bug：点击 tab 跳转到 registry 页面
+- [x] 分页功能
+	- [x] 展示所有的数据(数据可以分页)
+	- [x] 展示分页的页码UI 
+	- [x] 点击页码之后重新请求数据
+        	- [x] 请求 page 应该改变

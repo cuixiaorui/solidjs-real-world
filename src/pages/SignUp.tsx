@@ -1,9 +1,9 @@
-import { useStore } from "../store";
+import { useCommonStore } from "../store";
 import { createSignal } from "solid-js";
 import { useNavigate } from "@solidjs/router";
 
 export function SignUp() {
-  const [state]: any = useStore();
+  const [commonState]: any = useCommonStore();
   const navigate = useNavigate();
 
   const signUpHanlder = async function () {

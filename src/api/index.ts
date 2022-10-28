@@ -23,7 +23,7 @@ export const Articles = {
   byAuthor: (author: string | number | boolean, page: any) =>
     send("get", `/articles?author=${encodeURIComponent(author)}&${limit(5, page)}`),
   byTag: (tag: string | number | boolean, page: any, lim = 10) =>
-    send("get", `/articles?tag=${encodeURIComponent(tag)}&${limit(lim, page)}`),
+    send("get", `/articles?tag=${encodeURIComponent(tag)}&${limit(lim, page)}`, undefined, "articles"),
   del: (slug: any) => send("delete", `/articles/${slug}`),
   favorite: (slug: any) => send("post", `/articles/${slug}/favorite`),
   favoritedBy: (author: string | number | boolean, page: any) =>

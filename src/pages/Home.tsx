@@ -1,33 +1,17 @@
 import ArticleList from "../components/ArticleList";
-import {
-  createMemo,
-  For,
-  Show,
-  Suspense,
-  lazy,
-  createResource,
-  onMount,
-  createEffect,
-} from "solid-js";
+import { For, Show, Suspense, createEffect } from "solid-js";
 import { NavLink } from "../components/NavLink";
-import { useSearchParams, useLocation, useParams } from "@solidjs/router";
-import { Tags as TagsApi } from "../api";
-
-import { useStore } from "../store";
+import { useSearchParams, useLocation } from "@solidjs/router";
+import { useArticlesStore, useCommonStore } from "../store";
 
 function useData() {
-  const [store]: any = useStore();
-
-  const data = store.getAllArticles();
-
+  const [commonState]: any = useCommonStore();
   const location = useLocation();
-  console.log(location, "-----");
 
   return {
     handleSetPage() {},
     tab: () => {
-      // const [searchParams] = useSearchParams();
-      // return searchParams.tab;
+      // todo 需要确认一下是不是还需要
       const token = "2134";
       const search = location.search.split("?")[1];
       if (!search) return token ? "feed" : "all";
@@ -37,7 +21,7 @@ function useData() {
       console.log(result);
       return result;
     },
-    store,
+    state: commonState,
   };
 
   // const [store, { loadArticles, setPage }] = useStore(),
@@ -72,35 +56,32 @@ function useData() {
 }
 
 export const Home = () => {
-  const [state]: any = useStore();
-  const { handleSetPage, tab, store } = useData();
-
+  const [commonState]: any = useCommonStore();
+  const [articlesState]: any = useArticlesStore();
   const [searchParams] = useSearchParams();
 
-  const getData = state.getAriclesByTag();
   createEffect(() => {
-    console.log(getData(), "--1-1-");
-    console.log(searchParams.tab);
+    articlesState.getAriclesByTag(searchParams.tab);
   });
 
   return (
     <div class="home-page">
-      <Banner appName={state.appName}></Banner>
+      <Banner appName={commonState.appName}></Banner>
 
       <div class="container page">
         <div class="row">
           <div class="col-md-9">
-            <FeedToggle token={state.token}></FeedToggle>
+            <FeedToggle token={commonState.token}></FeedToggle>
             <ArticleList
-              articles={Object.values(store.articles)}
-              // totalPagesCount={store.totalPagesCount}
-              // currentPage={store.page}
-              // onSetPage={handleSetPage}
+              articles={Object.values(articlesState.articles)}
+              totalPagesCount={articlesState.totalPagesCount}
+              currentPage={articlesState.page}
+              onSetPage={articlesState.handleSetPage}
             />
           </div>
 
           <div class="col-md-3">
-            <Tags tags={state.tags}></Tags>
+            <Tags tags={commonState.tags}></Tags>
           </div>
         </div>
       </div>

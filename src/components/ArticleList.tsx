@@ -1,20 +1,19 @@
 import { For, Show, Suspense } from "solid-js";
-import { useStore } from "../store";
+import { useArticlesStore, useCommonStore } from "../store";
 import ArticlePreview from "./ArticlePreview";
 
 // 1. 获取到 props.articles
-
 export default (props) => {
-  //   handlePage = (v, e) => {
-  //     e.preventDefault();
-  //     props.onSetPage(v);
-  //     setTimeout(() => window.scrollTo(0, 0), 200);
-  //   };
+    const handlePage = (v, e) => {
+      e.preventDefault();
+      props.onSetPage(v);
+      setTimeout(() => window.scrollTo(0, 0), 200);
+    };
 
   return (
     <Suspense fallback={<div class="article-preview">Loading articles...</div>}>
       <Content articles={props.articles}></Content>
-      {/* <Show when={props.totalPagesCount > 1}>
+      <Show when={props.totalPagesCount > 1}>
         <nav>
           <ul class="pagination">
             <For each={[...Array(props.totalPagesCount).keys()]}>
@@ -30,13 +29,14 @@ export default (props) => {
             </For>
           </ul>
         </nav>
-      </Show> */}
+      </Show>
     </Suspense>
   );
 };
 
 function Content(props) {
-  const [{ token, unmakeFavorite, makeFavorite }]: any = useStore();
+  const [{ token }]: any = useCommonStore();
+  const [{ unmakeFavorite, makeFavorite }]: any = useArticlesStore();
 
   function handleClickFavorite([article, slug], e: any) {
     article.favorited ? unmakeFavorite(slug) : makeFavorite(slug);

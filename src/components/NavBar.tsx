@@ -1,17 +1,16 @@
 import { NavLink } from "./NavLink";
 import { Show } from "solid-js";
-import { useStore } from "../store";
+import { useCommonStore } from "../store";
 // import { useCount } from "../store";
 
 export const NavBar = () => {
-  const [state]: any = useStore();
-  console.log(state.currentUser)
+  const [commonState]: any = useCommonStore();
 
   return (
     <nav class="navbar navbar-light">
       <div class="container">
         <NavLink class="navbar-brand" route="">
-          {state.appName}
+          {commonState.appName}
         </NavLink>
         <ul class="nav navbar-nav pull-xs-right">
           <li class="nav-item">
@@ -20,7 +19,7 @@ export const NavBar = () => {
             </NavLink>
           </li>
           <Show
-            when={state.currentUser.username}
+            when={commonState.currentUser.username}
             fallback={
               <>
                 <li class="nav-item">
@@ -50,9 +49,9 @@ export const NavBar = () => {
               <NavLink
                 class="nav-link"
                 route="profile"
-                href={`@${state.currentUser.username}`}
+                href={`@${commonState.currentUser.username}`}
               >
-                {state.currentUser.username}
+                {commonState.currentUser.username}
               </NavLink>
             </li>
           </Show>

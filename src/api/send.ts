@@ -1,4 +1,4 @@
-import { useStore } from "../store";
+import { useCommonStore } from "../store";
 import { API_ROOT } from "./const";
 
 export async function send(
@@ -7,7 +7,7 @@ export async function send(
   data?: { user?: any; article?: any; comment?: any } | undefined,
   resKey?: string | undefined
 ) {
-  const [state]: any = useStore();
+  const [{token}]: any = useCommonStore();
 
   const headers: any = {};
   const opts: any = { method, headers };
@@ -17,7 +17,7 @@ export async function send(
     opts.body = JSON.stringify(data);
   }
 
-  if (state.token) headers["Authorization"] = `Token ${state.token}`;
+  if (token) headers["Authorization"] = `Token ${token}`;
 
   try {
     const response = await fetch(API_ROOT + url, opts);
