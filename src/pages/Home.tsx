@@ -60,6 +60,8 @@ export const Home = () => {
   const [articlesState]: any = useArticlesStore();
   const [searchParams] = useSearchParams();
 
+  commonState.setup()
+
   createEffect(() => {
     articlesState.getAriclesByTag(searchParams.tab);
   });

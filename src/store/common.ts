@@ -1,6 +1,6 @@
 import { createResource } from "solid-js";
 import { createStore } from "solid-js/store";
-import { Tags,Auth } from "../api";
+import { Tags, Auth } from "../api";
 
 export function useCommonStore() {
   return [state, setState];
@@ -19,6 +19,10 @@ const [state, setState] = createStore({
     localStorage.setItem("Token", user.token);
     setState({ currentUser: { username: user.username }, token: user.token });
   },
+
+  setup() {
+    createTags();
+  },
 });
 
 let tags;
@@ -28,5 +32,3 @@ async function createTags() {
     { initialValue: [] }
   );
 }
-
-createTags();

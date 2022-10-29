@@ -21,13 +21,23 @@ export const omitSlug = (article: any) =>
 export const Articles = {
   all: (page: any, lim = 10) => send("get", `/articles?${limit(lim, page)}`),
   byAuthor: (author: string | number | boolean, page: any) =>
-    send("get", `/articles?author=${encodeURIComponent(author)}&${limit(5, page)}`),
+    send(
+      "get",
+      `/articles?author=${encodeURIComponent(author)}&${limit(5, page)}`
+    ),
   byTag: (tag: string | number | boolean, page: any, lim = 10) =>
-    send("get", `/articles?tag=${encodeURIComponent(tag)}&${limit(lim, page)}`, undefined, "articles"),
+    send(
+      "get",
+      `/articles?tag=${encodeURIComponent(tag)}&${limit(lim, page)}`,
+      undefined
+    ),
   del: (slug: any) => send("delete", `/articles/${slug}`),
   favorite: (slug: any) => send("post", `/articles/${slug}/favorite`),
   favoritedBy: (author: string | number | boolean, page: any) =>
-    send("get", `/articles?favorited=${encodeURIComponent(author)}&${limit(5, page)}`),
+    send(
+      "get",
+      `/articles?favorited=${encodeURIComponent(author)}&${limit(5, page)}`
+    ),
   feed: () => send("get", "/articles/feed?limit=10&offset=0"),
   get: (slug: any) => send("get", `/articles/${slug}`, undefined, "articles"),
   unfavorite: (slug: any) => send("delete", `/articles/${slug}/favorite`),

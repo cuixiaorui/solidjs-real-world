@@ -65,3 +65,11 @@
 	- [x] 展示分页的页码UI 
 	- [x] 点击页码之后重新请求数据
         	- [x] 请求 page 应该改变
+- [x] 尝试给 store 写测试
+	- [x] 集成 vitest 
+		- 执行 pnpm test 可以跑通一个测试
+	- [x] 跑通 article 第一个功能（可以初始化就可以）
+		- [x] localStorage 是没有的 -> 需要 jsdom
+	- [x] 写一个真实的单元测试 -> 获取文章列表
+		- [x] 如何 mock 一个 api
+- [ ] 把 article store 所有的功能 全部测试掉

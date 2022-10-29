@@ -7,7 +7,7 @@ export async function send(
   data?: { user?: any; article?: any; comment?: any } | undefined,
   resKey?: string | undefined
 ) {
-  const [{token}]: any = useCommonStore();
+  const [{ token }]: any = useCommonStore();
 
   const headers: any = {};
   const opts: any = { method, headers };
@@ -21,13 +21,14 @@ export async function send(
 
   try {
     const response = await fetch(API_ROOT + url, opts);
+    console.log("response------", response);
     const json = await response.json();
-    console.log("json",json,resKey)
+    console.log("json", json, resKey);
     return resKey ? json[resKey] : json;
   } catch (err: any) {
     if (err && err.response && err.response.status === 401) {
       // actions.logout();
     }
-    return err;
+    return Promise.reject(err);
   }
 }
