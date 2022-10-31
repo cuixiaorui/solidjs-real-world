@@ -23,7 +23,6 @@ const [state, setState] = createStore({
           favorited: true,
           favoritesCount: s.favoritesCount + 1,
         }));
-        throw err;
       }
     }
   },
@@ -41,7 +40,6 @@ const [state, setState] = createStore({
           favorited: false,
           favoritesCount: s.favoritesCount - 1,
         }));
-        throw err;
       }
     }
   },

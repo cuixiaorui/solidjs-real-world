@@ -1,4 +1,10 @@
-import { test, expect, describe, beforeAll, afterEach, afterAll } from "vitest";
+import {
+  test,
+  it,
+  expect,
+  describe,
+  vi,
+} from "vitest";
 import { useArticlesStore } from "./articles";
 import flushPromises from "flush-promises";
 import { rest } from "msw";
@@ -54,50 +60,113 @@ describe("Article store", () => {
     expect(state.articles).toEqual({ "1234": { slug: "1234", title: "111" } });
   });
 
-  test("set favorited when success", async () => {
-    let [state]: any = useArticlesStore();
-    state.articles = {
-      "1234": {
+  describe("make favorited", () => {
+    let state;
+    let article;
+    function setup() {
+      [state] = useArticlesStore();
+      article = {
         favorited: false,
         slug: "1234",
-      },
-    };
-    state.makeFavorite("1234");
+        favoritesCount: 0,
+      };
+      state.articles = {
+        [article.slug]: article,
+      };
+    }
+    test("set favorited when success", async () => {
+      // given -> 准备数据
+      setup();
+      const fn = vi.fn();
+      server.use(
+        rest.post("https://api.realworld.io/api/articles/1234/favorite", fn)
+      );
 
-    expect(state.articles["1234"].favorited).toBe(true);
+      // when -> 触发测试动作
+      state.makeFavorite(article.slug);
 
-    let isRequest = false;
-    server.use(
-      rest.post("https://api.realworld.io/api/articles/1234/favorite", () => {
-        isRequest = true;
-      })
-    );
-    await flushPromises();
-    expect(isRequest).toBe(true);
-    expect(state.articles["1234"].favorited).toBe(true);
+      // then -> 验证结果
+      expect(state.articles[article.slug].favorited).toBe(true);
+      expect(state.articles[article.slug].favoritesCount).toBe(1);
+
+      await flushPromises();
+      expect(fn).toBeCalled();
+      expect(state.articles[article.slug].favorited).toBe(true);
+      expect(state.articles[article.slug].favoritesCount).toBe(1);
+    });
+
+    test("set favorited when fail", async () => {
+      setup();
+      server.use(
+        rest.post(
+          "https://api.realworld.io/api/articles/1234/favorite",
+          (req, res, ctx) => {
+            return res.networkError("Failed to connect");
+          }
+        )
+      );
+
+      state.makeFavorite(article.slug);
+
+      expect(state.articles[article.slug].favorited).toBe(true);
+      expect(state.articles[article.slug].favoritesCount).toBe(1);
+
+      await flushPromises();
+      expect(state.articles[article.slug].favorited).toBe(false);
+      expect(state.articles[article.slug].favoritesCount).toBe(0);
+    });
   });
 
-  test("set favorited when fail", async () => {
-    let [state]: any = useArticlesStore();
-    state.articles = {
-      "1234": {
-        favorited: false,
+  describe("unmakeFavorite", () => {
+    let state;
+    let article;
+    function setup() {
+      [state] = useArticlesStore();
+      article = {
+        favorited: true,
         slug: "1234",
-      },
-    };
-    state.makeFavorite("1234");
+        favoritesCount: 1,
+      };
+      state.articles = {
+        [article.slug]: article,
+      };
+    }
+    it("success", async () => {
+      setup();
+      // 拦截请求
+      let fn = vi.fn();
+      server.use(
+        rest.delete("https://api.realworld.io/api/articles/1234/favorite", fn)
+      );
 
-    expect(state.articles["1234"].favorited).toBe(true);
+      state.unmakeFavorite(article.slug);
 
-    server.use(
-      rest.post(
-        "https://api.realworld.io/api/articles/1234/favorite",
-        (req, res, ctx) => {
-          return res.networkError('Failed to connect')
-        }
-      )
-    );
-    await flushPromises();
-    expect(state.articles["1234"].favorited).toBe(false);
+      expect(state.articles[article.slug].favorited).toBe(false);
+      expect(state.articles[article.slug].favoritesCount).toBe(0);
+      await flushPromises();
+      expect(fn).toBeCalled();
+      expect(state.articles[article.slug].favorited).toBe(false);
+      expect(state.articles[article.slug].favoritesCount).toBe(0);
+    });
+
+    it("fail", async () => {
+      setup();
+      server.use(
+        rest.delete(
+          "https://api.realworld.io/api/articles/1234/favorite",
+          (req, res, ctx) => {
+            return res.networkError("Failed to connect");
+          }
+        )
+      );
+
+      state.unmakeFavorite(article.slug);
+
+      expect(state.articles[article.slug].favorited).toBe(false);
+      expect(state.articles[article.slug].favoritesCount).toBe(0);
+      await flushPromises();
+      expect(state.articles[article.slug].favorited).toBe(true);
+      expect(state.articles[article.slug].favoritesCount).toBe(1);
+    });
   });
 });
