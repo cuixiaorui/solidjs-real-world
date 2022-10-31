@@ -35,3 +35,57 @@
 //     }
 //   }
 // }
+import {
+  injectStylesBeforeElement,
+  StyleOptions,
+  getContainerEl,
+  setupHooks,
+} from "@cypress/mount-utils";
+import { render } from "solid-js/web";
+
+import { mount } from "./mount";
+
+// Cypress.Commands.add("solidMount", (Comp) => {
+//   return cy.then(() => {
+// 	console.log(document)
+// //     const $root = document.querySelector(ROOT_SELECTOR)!;
+
+// //     injectStylesBeforeElement(options ?? {}, document, getContainerEl());
+
+// //     // Render HTML containing component.
+// //     $root.innerHTML = `<${name} id="root"></${name}>`;
+
+//     //     const document: Document = cy.state("document");
+//     //     const el = getContainerEl();
+//     //     injectStylesBeforeElement({}, document, el);
+
+//     //     const componentNode = document.createElement("div");
+
+//     //     componentNode.id = "__cy_solid_root";
+
+//     //     //     el.append(componentNode);
+
+//     //     componentNode.innerHTML = `<div data-cy-root>heiheihei</div>`;
+
+//     //     el.append(componentNode);
+
+//     //     render(Comp, componentNode);
+//     //   return mount(comp);
+//   });
+// });
+
+
+
+
+Cypress.on("run:start", () => {
+	// Consider doing a check to ensure your adapter only runs in Component Testing mode.
+	console.log("------start---------------------------dsa,fd----------")
+      //   if (Cypress.testingType !== "component") {
+      //     return;
+      //   }
+      
+      //   Cypress.on("test:before:run", () => {
+      //     // Do some cleanup from previous test - for example, clear the DOM.
+      //     getContainerEl().innerHTML = "";
+      //   });
+      });

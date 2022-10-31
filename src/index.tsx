@@ -17,3 +17,10 @@ render(
   ),
   document.getElementById("root") as HTMLElement
 );
+
+
+function Comp() {
+  
+  return <div>1234</div>
+  
+}

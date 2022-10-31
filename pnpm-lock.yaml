@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@cypress/mount-utils': ^2.1.0
   '@hope-ui/solid': ^0.6.7
   '@solidjs/router': ^0.5.0
   '@stitches/core': ^1.2.8
@@ -23,6 +24,7 @@ dependencies:
   solid-transition-group: registry.npmmirror.com/solid-transition-group/0.0.11_solid-js@1.5.7
 
 devDependencies:
+  '@cypress/mount-utils': registry.npmmirror.com/@cypress/mount-utils/2.1.0
   cypress: registry.npmmirror.com/cypress/10.10.0
   flush-promises: registry.npmmirror.com/flush-promises/1.0.2
   happy-dom: registry.npmmirror.com/happy-dom/7.6.6
@@ -425,6 +427,12 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  registry.npmmirror.com/@cypress/mount-utils/2.1.0:
+    resolution: {integrity: sha512-lQHnFULi8SPzbKReZbK+jdfRVd0HkIqJa/fhnYlw6njHTaSfLRUi3UafwvUQpab2VnGk+5sUSP6+FOqKmdkZdQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@cypress/mount-utils/-/mount-utils-2.1.0.tgz}
+    name: '@cypress/mount-utils'
+    version: 2.1.0
+    dev: true
 
   registry.npmmirror.com/@cypress/request/2.88.10:
     resolution: {integrity: sha512-Zp7F+R93N0yZyG34GutyTNr+okam7s/Fzc1+i3kcqOP8vk6OuajuE9qZJ6Rs+10/1JFtXFYMdyarnU1rZuJesg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@cypress/request/-/request-2.88.10.tgz}

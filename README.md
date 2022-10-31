@@ -72,4 +72,9 @@
 		- [x] localStorage 是没有的 -> 需要 jsdom
 	- [x] 写一个真实的单元测试 -> 获取文章列表
 		- [x] 如何 mock 一个 api
-- [ ] 把 article store 所有的功能 全部测试掉
+- [x] 把 article store 所有的功能 全部测试掉
+- [ ] 探索下 cypress component test 如何和 solidjs 集成
+	- [ ] 照葫芦画瓢 - 先看看 和 vue 是如何集成的 
+		- [ ] 和vue集成的逻辑在哪里
+- [ ] 写 cypress 的 command
+	- [ ] solidjs 如何 mount 一个组件
