@@ -47,9 +47,9 @@
 ## 最后
 同学们玩的愉快~
 
-## 结对日期表
-- [x] 10.25 日  Baboon King
-- 10.26 日  abyss
+## 结对报名链接
+[报名链接](https://cxs.hildxd.com/)
+> 感谢 [hildxd](https://github.com/hildxd) 同学的贡献
 
 
 ## Tasking
